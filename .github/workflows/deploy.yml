@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Wysyłka przez FTP
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -33,4 +33,3 @@ jobs:
           server-dir: /public_html/
           port: 21
           security: "loose"
-          ftp-args: "--passive-mode"
