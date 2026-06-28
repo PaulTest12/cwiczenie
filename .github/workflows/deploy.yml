@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Deploy to VPS
 
 on:
   push:
@@ -10,27 +10,25 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Build
-        run: echo "Budowanie..."
+      - name: Build task
+        run: echo "Przygotowanie plików..."
 
   deploy:
-    name: Deploy to VPS
+    name: Deploy
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Copy files via SSH
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: public_html/
-          port: 21
-          security: loose
-          timeout: 100000
+          source: "index.html"
+          target: "public_html/"
