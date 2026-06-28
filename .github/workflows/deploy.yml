@@ -25,6 +25,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: FTP Deploy
+        deploy:
+    name: Deploy to VPS (FTP)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -33,3 +42,4 @@ jobs:
           server-dir: /public_html/
           port: 21
           security: "loose"
+          timeout: 100000 
