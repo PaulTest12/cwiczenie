@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Build and Deploy
 
 on:
   push:
@@ -17,16 +17,7 @@ jobs:
         run: echo "Budowanie..."
 
   deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: FTP Deploy
-        deploy:
-    name: Deploy to VPS (FTP)
+    name: Deploy to VPS
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +30,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /public_html/
+          server-dir: public_html/
           port: 21
-          security: "loose"
-          timeout: 100000 
+          security: loose
+          timeout: 100000
